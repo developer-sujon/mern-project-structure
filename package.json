@@ -1,13 +1,11 @@
 {
-  "name": "blog-application",
+  "name": "test-application",
   "version": "1.0.0",
   "main": "index.js",
   "license": "MIT",
   "scripts": {
     "start": "node api/index",
-    "server": "nodemon api/index",
-    "client": "npm start --prefix client",
-    "dev": "concurrently \"npm run server\" \"npm run client\""
+    "dev": "nodemon api/index"
   },
   "author": "developer-sujon",
   "dependencies": {
@@ -27,7 +25,6 @@
     "xss-clean": "^0.1.1"
   },
   "devDependencies": {
-    "concurrently": "^7.3.0",
     "nodemon": "^2.0.19"
   }
 }

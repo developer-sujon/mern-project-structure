@@ -8,7 +8,10 @@ require("express-async-errors");
 const app = new express();
 
 //Internal Import
-const { defaultErrorHandler } = require("./src/helper/errorHandler");
+const {
+  defaultErrorHandler,
+  notFoundError,
+} = require("./src/helper/errorHandler");
 
 //Confiqure dotenv
 dotenv.config({ path: path.join(__dirname, "./.env") });
@@ -83,6 +86,9 @@ app.use("/images", express.static(path.join(__dirname, "/uploads")));
 app.get("*", (req, res) => {
   res.sendFile(path.resolve(__dirname, "client", "build", "uploads"));
 });
+
+//Not Found Error Handler
+app.use(notFoundError);
 
 // Default Error Handler
 app.use(defaultErrorHandler);
