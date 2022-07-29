@@ -1,6 +1,6 @@
 //external import
 const mongoose = require("mongoose");
-const { createError } = require("../helper/errorHandler");
+const { error } = require("../helper/errorHandler");
 
 const connectDB = async (DATABASE_URL, DB_OPTIONS) => {
   try {

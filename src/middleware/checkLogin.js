@@ -3,7 +3,7 @@ const jwt = require("jsonwebtoken");
 const User = require("../model/UserModel");
 
 //internal import
-const createError = require("../helper/errorHandler");
+const { createError } = require("../helper/errorHandler");
 
 const checkLogin = async (req, res, next) => {
   try {
@@ -29,7 +29,7 @@ const checkLogin = async (req, res, next) => {
     ]);
 
     if (!user.length > 0) {
-      throw createError("Unauthorized Credentials", 401);
+      throw createError("User Not Found", 401);
     }
 
     req.id = user[0]._id;
