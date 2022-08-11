@@ -6,17 +6,18 @@ import { setLoading, removeLoading } from "../redux/features/settingSlice";
 import store from "../redux/store/store";
 
 axios.defaults.baseURL = "http://localhost:8080/api/v1";
-axios.defaults.headers.common["Authorization"] =
-  "Bearer " + SessionHelper.getToken();
-
 axios.defaults.headers.post["Content-Type"] =
   "application/x-www-form-urlencoded";
+
+const headers = {
+  Authorization: `Bearer ${SessionHelper.getToken()}`,
+};
 
 class ApiRequest {
   static getRequest(url) {
     store.dispatch(setLoading());
     return axios
-      .get(url)
+      .get(url, headers)
       .then((response) => {
         store.dispatch(removeLoading());
         if (response.status === 200) {
@@ -40,7 +41,7 @@ class ApiRequest {
   static postRequest(url, postJson) {
     store.dispatch(setLoading());
     return axios
-      .post(url, postJson)
+      .post(url, postJson, headers)
       .then((response) => {
         store.dispatch(removeLoading());
         if (response.status === 201 || response.status === 200) {
@@ -68,7 +69,7 @@ class ApiRequest {
   static updateRequest(url, postJson) {
     store.dispatch(setLoading());
     return axios
-      .patch(url, postJson)
+      .patch(url, postJson, headers)
       .then((response) => {
         store.dispatch(removeLoading());
         if (response.status === 200) {
@@ -93,7 +94,7 @@ class ApiRequest {
       });
   }
 
-  static deleteRequest(url) {
+  static deleteRequest(url, headers) {
     store.dispatch(setLoading());
     return axios
       .delete(url)

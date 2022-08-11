@@ -10,8 +10,8 @@ const LoginUser = lazy(() => import("../../components/LoginUser/LoginUser"));
 const LoginPage = () => {
   return (
     <Suspense fallback={<LazyLoader />}>
-      <MasterLayout>{/* <AppNavigation title="Login Page" /> */}</MasterLayout>
-      {/* <LoginUser /> */}
+      {/* <MasterLayout><AppNavigation title="Login Page" /></MasterLayout> */}
+      <LoginUser />
     </Suspense>
   );
 };

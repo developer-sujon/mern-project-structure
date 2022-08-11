@@ -5,9 +5,8 @@ import { Provider } from "react-redux";
 
 //internal lib import
 import App from "./App";
-import "./assets/css/bootstrap.css";
-import "./assets/css/animate.min.css";
-import "./assets/css/custom.css";
+import "animate.css";
+import "./index.css";
 import store from "./redux/store/store";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
