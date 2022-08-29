@@ -1,9 +1,65 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<svg width="500px" height="462px" viewBox="0 0 500 462" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
-    <!-- Generator: Sketch 59 (86127) - https://sketch.com -->
-    <title>Shape</title>
-    <desc>Created with Sketch.</desc>
-    <g id="Brand-v2" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
-        <path d="M430.426015,144.770115 C404.965969,144.770115 381.522561,158.678161 369.296698,181.183908 L332.114948,249.586207 L300.857071,191.551724 C285.228132,160.701149 241.366272,156.655172 225.485253,187.37931 L192.714898,250.724138 L143.307285,158.931034 L84.0685657,158.551724 L154.902949,293.333333 C169.901689,321.908046 210.360474,322.413793 226.241492,294.344828 L261.532644,231.632184 L295.815478,294.218391 C311.192337,322.287356 351.525082,322.413793 366.901941,294.344828 L414.923116,207.356322 C423.619864,191.551724 447.441391,197.747126 447.441391,215.701149 L447.567431,331.390805 C447.567431,374.37931 412.654399,409.402299 369.800857,409.402299 L130.451223,409.402299 C87.5976809,409.402299 52.6846483,374.37931 52.6846483,331.390805 L52.6846483,130.862069 C52.6846483,87.8735632 87.5976809,52.8505747 130.451223,52.8505747 L451.600706,52.8505747 L451.600706,0 L130.451223,0 C58.4824805,0 0,58.6666667 0,130.862069 L0,331.137931 C0,403.45977 58.3564406,462 130.451223,462 L369.548777,462 C441.643559,462 500,403.45977 500,331.137931 L500,223.16092 L500,214.563218 C500,176 468.868162,144.770115 430.426015,144.770115 Z" id="Shape" fill="#7510F7" fill-rule="nonzero" transform="translate(250.000000, 231.000000) scale(1, -1) translate(-250.000000, -231.000000) "></path>
+<svg id="Group_2" data-name="Group 2" xmlns="http://www.w3.org/2000/svg" viewBox="1261 1303 153 130">
+  <defs>
+    <style>
+      .cls-1, .cls-5, .cls-6 {
+        fill: none;
+      }
+
+      .cls-2 {
+        fill: #004b1c;
+        font-size: 30px;
+        font-family: Roboto-Medium, Roboto;
+        font-weight: 500;
+      }
+
+      .cls-3 {
+        fill: #217346;
+      }
+
+      .cls-4 {
+        fill: #221e1f;
+        font-size: 15px;
+        font-family: Roboto-Regular, Roboto;
+      }
+
+      .cls-5 {
+        stroke: #004b1c;
+      }
+
+      .cls-5, .cls-6 {
+        stroke-width: 3px;
+      }
+
+      .cls-6 {
+        stroke: #217346;
+      }
+
+      .cls-7 {
+        stroke: none;
+      }
+    </style>
+  </defs>
+  <rect id="Rectangle_7" data-name="Rectangle 7" class="cls-1" width="153" height="130" transform="translate(1261 1303)"/>
+  <text id="IT_ASISTA" data-name="IT ASISTA" class="cls-2" transform="translate(1264 1398.082)"><tspan x="0" y="0">QR</tspan><tspan class="cls-3" y="0" xml:space="preserve"> ASISTA</tspan></text>
+  <g id="Group_3" data-name="Group 3">
+    <text id="It_Inventory_System" data-name="It Inventory System" class="cls-4" transform="translate(1264 1417.695)"><tspan x="0" y="0">Bulk QR Create &amp; Print</tspan></text>
+  </g>
+  <g id="Group_1" data-name="Group 1" transform="translate(874 995.3)">
+    <g id="Rectangle_1" data-name="Rectangle 1" class="cls-5" transform="translate(431 308)">
+      <rect class="cls-7" width="31.002" height="31.002" rx="2"/>
+      <rect class="cls-1" x="1.5" y="1.5" width="28.002" height="28.002" rx="0.5"/>
     </g>
+    <g id="Rectangle_2" data-name="Rectangle 2" class="cls-6" transform="translate(464.698 308)">
+      <rect class="cls-7" width="31.002" height="31.002" rx="2"/>
+      <rect class="cls-1" x="1.5" y="1.5" width="28.002" height="28.002" rx="0.5"/>
+    </g>
+    <g id="Rectangle_3" data-name="Rectangle 3" class="cls-5" transform="translate(464.698 341.698)">
+      <rect class="cls-7" width="31.002" height="31.002" rx="2"/>
+      <rect class="cls-1" x="1.5" y="1.5" width="28.002" height="28.002" rx="0.5"/>
+    </g>
+    <g id="Rectangle_4" data-name="Rectangle 4" class="cls-6" transform="translate(431 341.698)">
+      <rect class="cls-7" width="31.002" height="31.002" rx="2"/>
+      <rect class="cls-1" x="1.5" y="1.5" width="28.002" height="28.002" rx="0.5"/>
+    </g>
+  </g>
 </svg>

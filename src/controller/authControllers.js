@@ -1,11 +1,11 @@
 //external import
-const bcrypt = require("bcrypt");
 const mongoose = require("mongoose");
-const jwt = require("jsonwebtoken");
+const bcrypt = require("bcrypt");
 
 //internal import
 const UserModel = require("../model/UserModel");
 const { createError } = require("../helper/errorHandler");
+const generateToken = require("../helper/generateToken");
 
 /**
  * @desc Register User
@@ -31,7 +31,7 @@ const registrationUser = async (req, res) => {
     }
 
     const exitUser = await UserModel.aggregate([
-      { $match: { $or: [{ userName }, { email }] } },
+      { $match: { $or: [{ userName }, { email }, { phone }] } },
     ]);
 
     if (exitUser && exitUser.length > 0) {
@@ -43,6 +43,7 @@ const registrationUser = async (req, res) => {
     newUser.password = hash;
 
     const user = await newUser.save();
+
     delete user._doc.password;
 
     res.status(201).json(user);
@@ -59,16 +60,14 @@ const registrationUser = async (req, res) => {
  */
 
 const loginUser = async (req, res) => {
-  const { userName, email, password } = req.body;
+  const { email, password } = req.body;
 
   try {
-    if (!email || !password || !userName) {
+    if (!email || !password) {
       throw createError("Invalid Data", 400);
     }
 
-    const exitUser = await UserModel.aggregate([
-      { $match: { $or: [{ userName }, { email }] } },
-    ]);
+    const exitUser = await UserModel.aggregate([{ $match: { email } }]);
 
     if (!exitUser.length > 0) {
       throw createError("User Not found", 404);
@@ -83,13 +82,15 @@ const loginUser = async (req, res) => {
     const payLoad = {
       id: exitUser[0]._id,
       userName: exitUser[0].userName,
+      roles: exitUser[0].roles,
+      email: exitUser[0].email,
     };
 
-    const token = await jwt.sign(payLoad, process.env.JWT_SECRET_KEY, {
-      expiresIn: "24h",
-    });
+    const token = await generateToken(payLoad);
 
-    res.json({ accessToken: token });
+    res.json({
+      accessToken: token,
+    });
   } catch (e) {
     throw createError(e.message, e.status);
   }

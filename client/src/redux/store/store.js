@@ -1,6 +1,8 @@
-//external import
+//External import
 import { configureStore } from "@reduxjs/toolkit";
-import settingSlice from "../features/settingSlice";
+
+//Internal Import
+import settingSlice from "../slices/settingSlice";
 
 const store = configureStore({
   reducer: {

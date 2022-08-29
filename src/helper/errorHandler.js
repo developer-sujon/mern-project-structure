@@ -7,7 +7,7 @@ const createError = (msg = "Server Error Occured", status = 400) => {
 
 //Not Found Error Handler
 const notFoundError = (req, res, next) => {
-  const err = createError(`Can't find ${req.originalUrl} on this server!`, 404);
+  const err = createError(`Your Requested Content was not found on this`, 404);
   next(err);
 };
 
@@ -15,10 +15,13 @@ const notFoundError = (req, res, next) => {
 const defaultErrorHandler = (err, req, res, next) => {
   const message = err.message ? err.message : "Server Error Occured";
   const status = err.status ? err.status : 500;
+
   res.status(status).json({
     message,
     stack: err.stack,
   });
+
+  //create error log file
 };
 
 module.exports = { defaultErrorHandler, createError, notFoundError };
