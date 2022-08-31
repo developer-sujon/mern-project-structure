@@ -1,6 +1,7 @@
 //External Import
 const userRoutes = require("express").Router();
 
+const { uploadImg } = require("../controller/uploadControllers");
 //Internal Import
 const {
   selectUser,
@@ -16,6 +17,7 @@ const { userAuth, adminAuth } = require("../middleware/checkAuthLogin");
 const {
   imageUpload,
   resizeAvata,
+  resizeImg,
 } = require("../middleware/multer/uploadPhoto");
 
 //Select User
@@ -24,8 +26,8 @@ userRoutes.get("/selectUser", userAuth, selectUser);
 //Update User
 userRoutes.patch(
   "/updateUser",
-  imageUpload.single("avata"),
-  resizeAvata,
+  imageUpload.single("avataImg"),
+  resizeImg,
   userAuth,
   updateUser,
 );
@@ -37,10 +39,7 @@ userRoutes.delete("/deleteUser", userAuth, deleteUser);
 userRoutes.get("/verifyAccountSendOtp", verifyAccountSendOtp);
 
 // Verify Account Verify Otp
-userRoutes.get(
-  "/verifyAccountVerifyOtp/:otpCode",
-  verifyAccountVerifyOtp,
-);
+userRoutes.get("/verifyAccountVerifyOtp/:otpCode", verifyAccountVerifyOtp);
 
 // Recovery Account Send Otp
 userRoutes.get("/recoveryAccountSendOtp/:email", recoveryAccountSendOtp);

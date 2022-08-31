@@ -2,6 +2,8 @@
 const multer = require("multer");
 const sharp = require("sharp");
 const path = require("path");
+const fs = require("fs");
+const shell = require("shelljs");
 
 //Internal import
 const { createError } = require("../../helper/errorHandler");
@@ -27,40 +29,20 @@ const imageUpload = multer({
   fileFilter: avataFileFilter,
 });
 
-const resizeAvata = async (req, res, next) => {
+const resizeImg = async (req, res, next) => {
   if (!req.file) return next();
+  const folderName = req.body.folderName || "unknown";
+  const imgWidth = req.body.imgWidth || 250;
+  const imgHeight = req.body.imgHeight || 250;
 
-  const fileExt = path.extname(req.file.originalname);
-  req.file.filename =
-    req.file.originalname
-      .replace(fileExt, "")
-      .toLowerCase()
-      .split(" ")
-      .join("-") +
-    "-" +
-    Date.now() +
-    fileExt;
+  const directory = `public/${folderName}`;
 
-  try {
-    await sharp(req.file.buffer)
-      .resize(250, 250)
-      .toFormat("jpeg")
-      .jpeg({ quality: 90 })
-      .toFile(path.join(`public/uploads/images/avata/${req.file.filename}`));
-
-    req.file.avataImg = `/uploads/images/avata/${req.file.filename}`;
-
-    next();
-  } catch (e) {
-    createError(e.message, e.status);
+  if (!fs.existsSync(directory)) {
+    shell.mkdir("-p", directory);
   }
-};
-
-const resizePost = async (req, res, next) => {
-  if (!req.file) return next();
 
   const fileExt = path.extname(req.file.originalname);
-  req.file.filename =
+  const formetFileName =
     req.file.originalname
       .replace(fileExt, "")
       .toLowerCase()
@@ -72,12 +54,13 @@ const resizePost = async (req, res, next) => {
 
   try {
     await sharp(req.file.buffer)
-      .resize(500, 500)
+      .resize(Number(imgWidth), Number(imgHeight))
       .toFormat("jpeg")
       .jpeg({ quality: 90 })
-      .toFile(path.join(`public/uploads/images/posts/${req.file.filename}`));
+      .toFile(path.join(`${directory + "/" + formetFileName}`));
 
-    req.file.postThumbnail = `/uploads/images/posts/${req.file.filename}`;
+    req.file.fileUrl = `http://localhost:8080/${folderName}/${formetFileName}`;
+    req.file.path = `/${folderName + "/" + formetFileName}`;
 
     next();
   } catch (e) {
@@ -86,7 +69,6 @@ const resizePost = async (req, res, next) => {
 };
 
 module.exports = {
+  resizeImg,
   imageUpload,
-  resizeAvata,
-  resizePost,
 };

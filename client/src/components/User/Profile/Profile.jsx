@@ -44,7 +44,7 @@ const Profile = () => {
               <img
                 ref={(input) => (userImgView = input)}
                 className="icon-nav-img-lg"
-                src={userProfile["photo"]}
+                src="/unknown/bytesize_mail-(1)-1661776562988.png"
                 alt={userProfile["userName"]}
                 style={{ maxWidth: "200px" }}
               />

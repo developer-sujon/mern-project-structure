@@ -63,24 +63,12 @@ const DB_OPTIONS = {
 //connection database
 connectDB(MONGODB_CONNECTION_URL, DB_OPTIONS);
 
-//multer fiile upload middleware
-const upload = multer({ dest: "uploads/" }).single("demo_image");
-
-app.post("/api/v1/upload", (req, res) => {
-  upload(req, res, (err) => {
-    if (err) {
-      res.status(400).send("Something went wrong!");
-    }
-    res.send(req.file);
-  });
-});
-
 // Routing Implement
 app.use("/api/v1", routes);
 
 if (process.env.NODE_ENV === "development") {
   //static file
-  app.use("/storage", express.static(path.join(__dirname, "public")));
+  app.use("/", express.static(path.join(__dirname, "public")));
 } else {
   //static file
   app.use(express.static("client/build"));
