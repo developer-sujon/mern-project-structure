@@ -1,18 +1,21 @@
 //Create Custom Error
-const createError = (msg = "Server Error Occured", status = 400) => {
+const CreateError = (msg, status=400) => {
   const e = new Error(msg);
   e.status = status;
   return e;
 };
 
 //Not Found Error Handler
-const notFoundError = (req, res, next) => {
-  const err = createError(`Your Requested Content was not found on this`, 404);
-  next(err);
+const NotFoundError = (req, res, next) => {
+  const error = CreateError(
+    `Your Requested Content was not found on this Server`,
+    404,
+  );
+  next(error);
 };
 
 //Default Error Handler
-const defaultErrorHandler = (err, req, res, next) => {
+const DefaultErrorHandler = (err, req, res, next) => {
   const message = err.message ? err.message : "Server Error Occured";
   const status = err.status ? err.status : 500;
 
@@ -24,4 +27,4 @@ const defaultErrorHandler = (err, req, res, next) => {
   //create error log file
 };
 
-module.exports = { defaultErrorHandler, createError, notFoundError };
+module.exports = { DefaultErrorHandler, CreateError, NotFoundError };

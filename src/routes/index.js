@@ -2,21 +2,21 @@
 const routes = require("express").Router();
 
 //Internal Import
-const authRoutes = require("./authRoutes");
-const userRoutes = require("./userRoutes");
-const adminRoutes = require("./adminRoutes");
-const { uploadRoutes } = require("./uploadRoutes");
+const AuthRoutes = require("./AuthRoutes");
+const UserRoutes = require("./UserRoutes");
+const AdminRoutes = require("./AdminRoutes");
+const BlogRoutes = require("./BlogRoutes");
 
-//auth Routes
-routes.use("/auth", authRoutes);
+//Auth Routes
+routes.use("/Auth", AuthRoutes);
 
-//user Routes
-routes.use("/user", userRoutes);
+//User Routes
+routes.use("/User", UserRoutes);
 
-//admin Routes
-routes.use("/admin", adminRoutes);
+//User Routes
+routes.use("/Admin", AdminRoutes);
 
-//upload Routes
-routes.use("/storage", uploadRoutes);
+//Brand Routes
+routes.use("/Blog", BlogRoutes);
 
 module.exports = routes;

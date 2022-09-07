@@ -4,14 +4,14 @@ const morgan = require("morgan");
 const dotenv = require("dotenv");
 const multer = require("multer");
 const path = require("path");
-require("express-async-errors");
+
 const app = new express();
 
 //Internal Import
 const {
-  defaultErrorHandler,
-  notFoundError,
-} = require("./src/helper/errorHandler");
+  DefaultErrorHandler,
+  NotFoundError,
+} = require("./src/helper/ErrorHandler");
 
 //Confiqure dotenv
 dotenv.config({ path: path.join(__dirname, "./.env") });
@@ -56,7 +56,7 @@ const MONGODB_CONNECTION_URL = process.env.MONGODB_CONNECTION_URL;
 const DB_OPTIONS = {
   user: process.env.MONGODB_DATABASE_USERNAME,
   pass: process.env.MONGODB_DATABASE_PASSWORD,
-  dbName: "test",
+  dbName: process.env.MONGODB_DATABASE_NAME,
   autoIndex: true,
 };
 
@@ -66,11 +66,7 @@ connectDB(MONGODB_CONNECTION_URL, DB_OPTIONS);
 // Routing Implement
 app.use("/api/v1", routes);
 
-if (process.env.NODE_ENV === "development") {
-  //static file
-  app.use("/", express.static(path.join(__dirname, "public")));
-} else {
-  //static file
+if (process.env.NODE_ENV === "production") {
   app.use(express.static("client/build"));
   // Add React Front End Routing
   app.get("*", (req, res) => {
@@ -78,10 +74,13 @@ if (process.env.NODE_ENV === "development") {
   });
 }
 
+//static file
+app.use("/", express.static(path.join(__dirname, "public")));
+
 //Not Found Error Handler
-app.use(notFoundError);
+app.use(NotFoundError);
 
 // Default Error Handler
-app.use(defaultErrorHandler);
+app.use(DefaultErrorHandler);
 
 module.exports = app;

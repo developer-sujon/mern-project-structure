@@ -1,37 +1,9 @@
 //external import
-const jwt = require("jsonwebtoken");
-const User = require("../model/UserModel");
+const UsersModel = require("../model/Users/UsersModel");
 
 //internal import
-const { createError } = require("../helper/errorHandler");
-
-/**
- * @desc Check Auth
- * @access public
- * @route /api/v1/auth/login
- * @methud POST
- */
-
-const auth = async (req) => {
-  const { authorization } = req.headers;
-  if (!authorization) {
-    throw createError("Unauthorized Credentials ", 401);
-  }
-
-  let token = authorization.split(" ")[1];
-
-  if (!token) {
-    throw createError("No Token", 401);
-  }
-
-  const decoded = await jwt.verify(token, process.env.JWT_SECRET_KEY);
-
-  if (!decoded) {
-    throw createError("Invalid Token", 401);
-  }
-
-  return decoded;
-};
+const { CreateError } = require("../helper/ErrorHandler");
+const DecodedToken = require("../utility/DecodedToken");
 
 /**
  * @desc Check User Auth
@@ -40,39 +12,39 @@ const auth = async (req) => {
  * @methud POST
  */
 
-const userAuth = async (req, res, next) => {
+const UserAuth = async (req, res, next) => {
   try {
     const { authorization } = req.headers;
 
     if (!authorization) {
-      throw createError("Unauthorized Credentials ", 401);
+      throw CreateError("Unauthorized Credentials ", 401);
     }
 
     let token = authorization.split(" ")[1];
 
     if (!token) {
-      throw createError("No Token", 401);
+      throw CreateError("No Token", 401);
     }
 
-    const decoded = await jwt.verify(token, process.env.JWT_SECRET_KEY);
+    const decoded = await DecodedToken(token);
 
     if (!decoded) {
-      throw createError("Invalid Token", 401);
+      throw CreateError("Invalid Token", 401);
     }
 
-    const user = await User.aggregate([
+    const user = await UsersModel.aggregate([
       {
-        $match: { userName: decoded.userName },
+        $match: { Email: decoded.Email },
       },
     ]);
 
     if (!user.length > 0) {
-      throw createError("User Not Found", 401);
+      throw CreateError("User Not Found", 401);
     }
 
     req.id = user[0]._id;
-    req.userName = user[0].userName;
-    req.email = user[0].email;
+    req.Email = user[0].Email;
+    req.Password = user[0].Password;
 
     next();
   } catch (e) {
@@ -86,23 +58,23 @@ const userAuth = async (req, res, next) => {
  * @route /api/v1/auth/login
  * @methud POST
  */
-const adminAuth = async (req, res, next) => {
+const AdminAuth = async (req, res, next) => {
   try {
-    const { userName } = req;
+    const { Email } = req;
 
-    const admin = await User.aggregate([
+    const admin = await UsersModel.aggregate([
       {
         $match: {
-          $and: [{ userName }, { roles: { $in: ["ADMIN"] } }],
+          $and: [{ Email: Email }, { Roles: "ADMIN" }],
         },
       },
     ]);
 
     if (!admin.length > 0) {
-      throw createError("Invalid Credentials", 401);
+      throw CreateError("Invalid Credentials", 401);
     }
 
-    req.roles = admin[0].roles;
+    req.Roles = admin[0].Roles;
 
     next();
   } catch (e) {
@@ -111,6 +83,6 @@ const adminAuth = async (req, res, next) => {
 };
 
 module.exports = {
-  userAuth,
-  adminAuth,
+  UserAuth,
+  AdminAuth,
 };

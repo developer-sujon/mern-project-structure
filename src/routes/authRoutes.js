@@ -1,16 +1,13 @@
 //External Import
-const authRoutes = require("express").Router();
+const AuthRoutes = require("express").Router();
 
 //Internal Import
-const {
-  registrationUser,
-  loginUser,
-} = require("../controller/authControllers");
+const AuthControllers = require("../controller/auth/AuthControllers");
 
-//registration User
-authRoutes.post("/registrationUser", registrationUser);
+//Register User
+AuthRoutes.post("/RegisterUser", AuthControllers.RegisterUser);
 
 //Login User
-authRoutes.post("/loginUser", loginUser);
+AuthRoutes.post("/LoginUser", AuthControllers.LoginUser);
 
-module.exports = authRoutes;
+module.exports = AuthRoutes;

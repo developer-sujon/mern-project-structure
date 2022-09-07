@@ -1,56 +1,51 @@
 //External Import
-const userRoutes = require("express").Router();
+const UserRoutes = require("express").Router();
 
-const { uploadImg } = require("../controller/uploadControllers");
 //Internal Import
-const {
-  selectUser,
-  updateUser,
-  deleteUser,
-  verifyAccountSendOtp,
-  verifyAccountVerifyOtp,
-  recoveryAccountSendOtp,
-  recoveryAccountVerifyOtp,
-  recoveryPassword,
-} = require("../controller/userControllers");
-const { userAuth, adminAuth } = require("../middleware/checkAuthLogin");
-const {
-  imageUpload,
-  resizeAvata,
-  resizeImg,
-} = require("../middleware/multer/uploadPhoto");
+const { UserAuth } = require("../middleware/checkAuthLogin");
+const UserControllers = require("../controller/User/UserControllers");
 
-//Select User
-userRoutes.get("/selectUser", userAuth, selectUser);
+//User Profile
+UserRoutes.get("/UserDetails", UserAuth, UserControllers.UserDetails);
+
+//User Change Password
+UserRoutes.put(
+  "/UserChangePassword",
+  UserAuth,
+  UserControllers.UserChangePassword,
+);
 
 //Update User
-userRoutes.patch(
-  "/updateUser",
-  imageUpload.single("avataImg"),
-  resizeImg,
-  userAuth,
-  updateUser,
-);
+UserRoutes.patch("/UserUpdate", UserAuth, UserControllers.UserUpdate);
 
 //Delete User
-userRoutes.delete("/deleteUser", userAuth, deleteUser);
+UserRoutes.delete("/UserDelete", UserAuth, UserControllers.UserDelete);
 
-// Verify Account Send Otp
-userRoutes.get("/verifyAccountSendOtp", verifyAccountSendOtp);
+//Send Recovery Otp
+UserRoutes.get("/SendRecoveryOtp/:Email", UserControllers.SendRecoveryOtp);
 
-// Verify Account Verify Otp
-userRoutes.get("/verifyAccountVerifyOtp/:otpCode", verifyAccountVerifyOtp);
-
-// Recovery Account Send Otp
-userRoutes.get("/recoveryAccountSendOtp/:email", recoveryAccountSendOtp);
-
-// Recovery Account Verify Otp
-userRoutes.get(
-  "/recoveryAccountVerifyOtp/:email/:otpCode",
-  recoveryAccountVerifyOtp,
+//Verify Recovary Otp
+UserRoutes.get(
+  "/VerifyRecoveryOtp/:Email/:OtpCode",
+  UserControllers.VerifyRecoveryOtp,
 );
 
-// Recovery Password
-userRoutes.get("/recoveryPassword/:email/:otpCode", recoveryPassword);
+//Recovery Reset Pass
+UserRoutes.post(
+  "/RecoveryResetPass/:Email/:OtpCode",
+  UserControllers.RecoveryResetPass,
+);
 
-module.exports = userRoutes;
+//Verify Account Sent Otp
+UserRoutes.get(
+  "/VerifyAccountSentOtp/:Email",
+  UserControllers.VerifyAccountSentOtp,
+);
+
+//Verify Account Verify Otp
+UserRoutes.get(
+  "/VerifyAccountVerifyOtp/:Email/:OtpCode",
+  UserControllers.VerifyAccountVerifyOtp,
+);
+
+module.exports = UserRoutes;
